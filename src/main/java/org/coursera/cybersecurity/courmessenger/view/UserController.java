@@ -59,7 +59,9 @@ public class UserController {
             } else {
 
                 // check if the password is strong enough
-                RuleResult ruleResult = passwordValidator.validate(new PasswordData(userForm.getPassword()));
+                PasswordData passwordData = new PasswordData(userForm.getPassword());
+                passwordData.setUsername(userForm.getEmail());
+                RuleResult ruleResult = passwordValidator.validate(passwordData);
                 if (!ruleResult.isValid()) {
 
                     // add messages to show in the view

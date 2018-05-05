@@ -5,8 +5,11 @@ import java.io.InputStreamReader;
 import org.passay.CharacterRule;
 import org.passay.DictionarySubstringRule;
 import org.passay.EnglishCharacterData;
+import org.passay.EnglishSequenceData;
+import org.passay.IllegalSequenceRule;
 import org.passay.LengthRule;
 import org.passay.PasswordValidator;
+import org.passay.UsernameRule;
 import org.passay.dictionary.Dictionary;
 import org.passay.dictionary.DictionaryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,20 +77,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // format:off
         return new PasswordValidator(
-                // at least 8 characters
+                // at least x characters
                 new LengthRule(MIN_PASSWORD_LEN, Integer.MAX_VALUE),
 
                 // at least 5 alphabetical character
                 new CharacterRule(EnglishCharacterData.Alphabetical, 5),
 
-                // at least one digit character (disabled)
-                // new CharacterRule(EnglishCharacterData.Digit, 1),
+                // at least one digit character
+                new CharacterRule(EnglishCharacterData.Digit, 1),
 
                 // at least one symbol (special character)
-                new CharacterRule(EnglishCharacterData.Special, 1),
+                //new CharacterRule(EnglishCharacterData.Special, 1),
 
                 // not allow password in the dictionary
-                new DictionarySubstringRule(dictionary));
+                new DictionarySubstringRule(dictionary),
+
+                // not similiar to username
+                new UsernameRule(),
+                
+                // invalid sequences
+                new IllegalSequenceRule(EnglishSequenceData.Alphabetical),
+                new IllegalSequenceRule(EnglishSequenceData.USQwerty)
+
+                );
         // format:on
     }
 }
