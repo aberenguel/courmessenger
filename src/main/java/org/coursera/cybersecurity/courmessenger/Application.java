@@ -1,35 +1,22 @@
 package org.coursera.cybersecurity.courmessenger;
 
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class Application {
-
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
+@EnableWebSecurity
+public class Application implements WebMvcConfigurer {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
     }
 
-    @Bean
-    public DataSource dataSource() throws SQLException {
-        if (dbUrl == null || dbUrl.isEmpty()) {
-            return new HikariDataSource();
-        } else {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(dbUrl);
-            return new HikariDataSource(config);
-        }
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/home").setViewName("home");
     }
 }
