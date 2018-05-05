@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+<head>
+<title>Error</title>
+</head>
+<body>
+    <div class="container">
+
+        <h2 th:if="${status}">
+            <span th:text="${status}">status-code</span> 
+            <span th:if="${error}" th:text="'('+${error}+')'">error ...</span>
+        </h2>
+
+        <p th:if="${timestamp}" id='created'>
+            <b>Occurred:</b> <span th:text="${#dates.format(timestamp)}">Timestamp</span>
+        </p>
+
+        <div th:if="${message}">
+            <b>Message:</b> <span th:text="${message}">message ...</span>
+        </div>
+        
+        <div th:if="${trace}">
+            <br/>
+            <b>Stack Trace:</b><br/><pre th:text="${trace}">trace...</pre>
+        </div>
+
+    </div>
+</body>
+</html>
