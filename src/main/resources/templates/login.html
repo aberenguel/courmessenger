@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}"
+    xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <title>Login page</title>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Login</h1>
+    </div>
+    <div class="container">
+        <div th:if="${param.error != null}" class="alert alert-danger text-center" role="alert">
+            Invalid credentials!
+        </div>
+
+        <form th:action="@{/login}" class="form-login" method="post">
+
+            <div class="form-group">
+                <label for="inputEmail">Email address</label> <input type="text" id="inputEmail" name="username"
+                    class="form-control form-control-lg" autofocus="autofocus" placeholder="email" />
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label> <input type="password" id="inputPassword" name="password"
+                    class="form-control form-control-lg" placeholder="password" />
+
+            </div>
+            <input type="submit" class="btn btn-primary" value="Log in" />
+        </form>
+
+    </div>
+</body>
+</html>

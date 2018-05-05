@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags"
+    th:replace="~{fragments/layout :: layout (~{::body},'index')}">
 
 <body>
 
-<div class="jumbotron text-center">
-  <div class="container">
-    <h1>CourMessenger</h1>
-    <p>This is a secure messenger for Coursera Capstone project of Cybersecurity specialization.</p>
-    <a type="button" class="btn btn-lg btn-primary" th:href="@{/registration}"> Registration</a>
-    <a type="button" class="btn btn-lg btn-primary" th:href="@{/login}">Login</a>
-  </div>
-</div>
+    <div class="jumbotron text-center">
+        <div class="container">
 
+            <h1>Courmessenger</h1>
+            <p>This is a secure messenger for Coursera Capstone project of Cybersecurity specialization.</p>
+            <br />
+
+            <div sec:authorize="!isAuthenticated()">
+                <a type="button" class="btn btn-lg btn-primary" th:href="@{/registration}"> Registration</a> 
+                <a type="button" class="btn btn-lg btn-primary" th:href="@{/login}">Login</a>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <a type="button" class="btn btn-lg btn-primary" th:href="@{/messages}">View Message Inbox</a>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
