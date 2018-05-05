@@ -3,11 +3,11 @@
     th:fragment="layout (template, menu)">
 <head>
 <title>Java Getting Started on Heroku</title>
-<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
-<script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
 <body>
@@ -16,30 +16,29 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li sec:authorize="isAuthenticated()" class="navbar-right">
-                    <form id="logoutForm" th:action="@{/logout}" method="post">
-                    </form>
-                    <a href="javascript:none"  onclick="$('#logoutForm').submit();"><span class="glyphicon glyphicon-exit"></span> Logout</a>
-                </li>
-                <li sec:authorize="!isAuthenticated()" class="navbar-right">
-                    <a th:href="@{/login}"><span class="glyphicon glyphicon-enter"></span> Login</a>
-                </li>
-            </ul>
+
+            <div sec:authorize="isAuthenticated()">
+                <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        <form id="logoutForm" th:action="@{/logout}" method="post">
+                        </form>
+                        <a href="javascript:none"  onclick="$('#logoutForm').submit();"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                    </li>
+                </ul>
+                <p class="navbar-text navbar-nav navbar-right">(<span sec:authentication="name">Bob</span>)</p>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a th:href="@{/registration}"><span class="glyphicon glyphicon-user"></span> Registration</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div th:replace="${template}"></div>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-
-        This content will only be visible to users who have the "supervisor" authority in their list of
-        <tt>GrantedAuthority</tt>
-        s.
-
-    </div>
-
-    <div sec:authorize="isAuthenticated()">This content is only shown to authenticated users.</div>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">This content is only shown to administrators.</div>
-    <div sec:authorize="hasRole('ROLE_USER')">This content is only shown to users.</div>
-
-
 </body>

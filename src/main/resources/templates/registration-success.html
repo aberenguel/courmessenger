@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+
+<div class="container text-center alert alert-success">
+    <p>User <b><span th:text="${user.email}"></span></b> registered successfully!
+</div>
+
+<div class="container text-center">
+    <a type="button" class="btn btn-lg btn-primary" th:href="@{/login}">Login Now</a>
+</div>
+
+</body>
+</html>
