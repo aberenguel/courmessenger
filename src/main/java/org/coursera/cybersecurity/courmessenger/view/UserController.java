@@ -10,6 +10,7 @@ import org.passay.PasswordData;
 import org.passay.PasswordValidator;
 import org.passay.RuleResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,13 @@ public class UserController {
     private UserRepository repository;
 
     @GetMapping("/registration")
-    public String registration(Model model) {
+    public String registration(Authentication authentication, Model model) {
+
+        // already authenticated
+        if (authentication != null && authentication.isAuthenticated()) {
+            return "redirect:/";
+        }
+
         model.addAttribute("userForm", new UserForm());
         return "registration.html";
     }
