@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class DatabaseController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DatabaseController.class);
 
     @Autowired
     private DataSource dataSource;
@@ -80,8 +84,10 @@ public class DatabaseController {
     @GetMapping("/dbdump/h2")
     private ResponseEntity<InputStreamResource> downloadDatabase() throws FileNotFoundException {
 
-        // send the database file
         File databaseFile = new File(databaseFileName + ".mv.db");
+        LOG.info("Sending database file " + databaseFile.getAbsolutePath());
+
+        // send the database file
         FileInputStream fileStream = new FileInputStream(databaseFile);
         InputStreamResource body = new InputStreamResource(fileStream);
 
