@@ -1,8 +1,10 @@
-package org.coursera.cybersecurity.courmessenger;
+package org.coursera.cybersecurity.courmessenger.service;
 
 import org.coursera.cybersecurity.courmessenger.domain.User;
 import org.coursera.cybersecurity.courmessenger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +29,17 @@ public class UserService implements UserDetailsService {
                 .username(user.getEmail()) //
                 .authorities("ROLE_USER") //
                 .build();
+    }
+
+    public User getUserLoggedIn() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null) {
+            return null;
+        }
+
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        return repository.findByEmail(principal.getUsername());
     }
 
 }

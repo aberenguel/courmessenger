@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+
+<div class="container">
+    <a type="button" th:href="@{/messages/new}" class="btn btn-info" role="button">Compose a new message</a>
+</div>
+<br/>
+<div class="container">
+    <div class="container text-left">
+        <h3>Sent Messages</h3>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 20%">To</th>
+                <th>Subject</th>
+                <th style="width: 20%">Date</th>
+                <th style="width: 10%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="message : ${messages}" >
+                <td th:text="${message.receiver.email}">user@company.com</td>
+                <td th:text="${message.subject}">Checking match of request</td>
+                <td th:text="${#dates.format(message.creationDate, 'dd-MMM-yyyy -  HH:mm')}"></td>
+                <td><a th:href="@{'/messages/' + ${message.id}}">View</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

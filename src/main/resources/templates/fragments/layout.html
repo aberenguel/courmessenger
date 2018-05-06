@@ -14,10 +14,14 @@
     <nav class="navbar navbar-default navbar-static-top navbar-inverse">
         <div class="container">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                <li class="active"><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             </ul>
 
             <div sec:authorize="isAuthenticated()">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a th:href="@{/messages/inbox}"><span class="glyphicon glyphicon-inbox"></span> Inbox</a></li>
+                    <li class="active"><a th:href="@{/messages/outbox}"><span class="glyphicon glyphicon-folder-open"></span> Sent Messages</a></li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li >
                         <form id="logoutForm" th:action="@{/logout}" method="post">

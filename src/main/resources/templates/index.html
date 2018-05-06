@@ -8,7 +8,7 @@
         <div class="container">
 
             <h1>Courmessenger</h1>
-            <p>This is a secure messenger for Coursera Capstone project of Cybersecurity specialization.</p>
+            <p>This is a encrypted messenger for Coursera Capstone project of Cybersecurity specialization.</p>
             <br />
 
             <div sec:authorize="!isAuthenticated()">
@@ -16,7 +16,7 @@
                 <a type="button" class="btn btn-lg btn-primary" th:href="@{/login}">Login</a>
             </div>
             <div sec:authorize="isAuthenticated()">
-                <a type="button" class="btn btn-lg btn-primary" th:href="@{/messages}">View Message Inbox</a>
+                <a type="button" class="btn btn-lg btn-primary" th:href="@{/messages/inbox}">View Message Inbox</a>
             </div>
         </div>
     </div>

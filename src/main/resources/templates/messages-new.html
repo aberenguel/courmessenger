@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+
+    <div class="container">
+
+        <div class="container text-center">
+            <h1>Compose a new message</h1>
+        </div>
+
+        <form th:action="@{/messages}" th:object="${messageForm}" class="form-message-new" method="post">
+            
+            <div class="form-group" th:classappend="${#fields.hasErrors('receiverEmail')}? has-error">
+                <label for="receiverEmail">Recipient (To)</label> 
+                <input type="text" id="receiverEmail" name="receiverEmail" th:field="*{receiverEmail}" th:required="required" 
+                    class="form-control form-control-lg" placeholder="Recipient email address" />
+                <p th:if="${#fields.hasErrors('receiverEmail')}" th:errors="*{receiverEmail}" class="text-danger">Invalid Email</p>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('subject')}? has-error">
+                <label for="subject">Subject</label> 
+                <input type="text" id="subject" name="subject" th:field="*{subject}" th:required="required" 
+                    class="form-control form-control-lg" placeholder="subject" />
+                <p th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="text-danger">Invalid Subject</p>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('body')}? has-error">
+                <label for="body">Message</label> 
+                <textarea id="body" name="body" th:field="*{body}" th:required="required" 
+                    class="form-control message-body" >
+                </textarea>
+                <p th:if="${#fields.hasErrors('subject')}" th:errors="*{body}" class="text-danger">Invalid Subject</p>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Send Message" />
+            <a type="button" th:href="@{/messages/inbox}" class="btn btn-default" role="button">Cancel</a>
+
+        </form>
+    
+    </div>
+
+</body>
+</html>

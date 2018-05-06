@@ -2,6 +2,7 @@ package org.coursera.cybersecurity.courmessenger;
 
 import java.io.InputStreamReader;
 
+import org.coursera.cybersecurity.courmessenger.service.UserService;
 import org.passay.CharacterRule;
 import org.passay.DictionarySubstringRule;
 import org.passay.EnglishCharacterData;
@@ -47,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/messages/inbox")
                 .permitAll()
                 .and()
             .logout()
