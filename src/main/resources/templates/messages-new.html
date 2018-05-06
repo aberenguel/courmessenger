@@ -21,7 +21,7 @@
             <div class="form-group" th:classappend="${#fields.hasErrors('subject')}? has-error">
                 <label for="subject">Subject</label> 
                 <input type="text" id="subject" name="subject" th:field="*{subject}" th:required="required" 
-                    class="form-control form-control-lg" placeholder="subject" />
+                    class="form-control form-control-lg" placeholder="subject" autocomplete="off" />
                 <p th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="text-danger">Invalid Subject</p>
             </div>
 
