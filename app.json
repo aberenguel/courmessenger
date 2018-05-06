@@ -1,4 +1,5 @@
 {
   "name": "Courmessenger - A secure messenger for Coursera",
-  "description": "A encrypted messenger for Coursera Capstone project of Cybersecurity specialization."
+  "description": "A encrypted messenger for Coursera Capstone project of Cybersecurity specialization.",
+  "addons": [ "heroku-postgresql" ]
 }

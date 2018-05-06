@@ -2,7 +2,6 @@ package org.coursera.cybersecurity.courmessenger.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,11 +37,9 @@ public class Message {
     private byte[] iv;
 
     @NotNull
-    @Column(columnDefinition = "BINARY(250)")
     private byte[] encryptedSubject;
 
     @NotNull
-    @Column(columnDefinition = "BINARY(5100)")
     private byte[] encryptedBody;
 
     @NotNull

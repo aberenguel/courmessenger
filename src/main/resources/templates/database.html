@@ -10,7 +10,7 @@
             <p>Database dumping</p>
             <br />
             <a type="button" class="btn btn-lg btn-primary" th:href="@{/dbdump/json}"> JSON format</a> 
-            <a type="button" class="btn btn-lg btn-primary" th:href="@{/dbdump/h2}">Raw H2 database</a>
+            <a type="button" th:if="${isH2}" class="btn btn-lg btn-primary" th:href="@{/dbdump/h2}">Raw H2 database</a>
         </div>
     </div>
 

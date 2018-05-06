@@ -36,10 +36,20 @@ public class DatabaseController {
     @Autowired
     private DataSource dataSource;
 
-    @Value("${app.database.file}")
-    private String databaseFileName;
+    @Value("${spring.datasource.url}")
+    private String jdbcUrl;
 
     private String[] tables = { "user_account", "message" };
+
+    @GetMapping("/dbdump")
+    private String dbdump(Model model) {
+
+        boolean isH2 = jdbcUrl.startsWith("jdbc:h2:");
+
+        model.addAttribute("isH2", isH2);
+
+        return "database";
+    }
 
     @GetMapping(value = "/dbdump/json", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -82,7 +92,8 @@ public class DatabaseController {
     }
 
     @GetMapping("/dbdump/h2")
-    private ResponseEntity<InputStreamResource> downloadDatabase() throws FileNotFoundException {
+    private ResponseEntity<InputStreamResource> downloadDatabase(@Value("${app.database.file}") String databaseFileName)
+            throws FileNotFoundException {
 
         File databaseFile = new File(databaseFileName + ".mv.db");
         LOG.info("Sending database file " + databaseFile.getAbsolutePath());
