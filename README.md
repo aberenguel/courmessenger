@@ -59,3 +59,23 @@ Finally access in the url
 ```
 http://localhost:5813
 ```
+
+## Running in production environment (Heroku)
+
+Create the host
+
+```
+heroku create
+```
+
+Push the code
+
+```
+heroku push heroku master
+```
+
+Create a random APP_MASTER_SECRET
+
+```
+heroku config:set APP_MASTER_SECRET=$(dd if=/dev/urandom of=/dev/stdout bs=1 count=32 status=none | base64)
+```
