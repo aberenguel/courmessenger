@@ -17,6 +17,8 @@ public class Application implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 
+        registry.addViewController("/dbdump").setViewName("database");
+
         registry.addRedirectViewController("index.html", "/");
     }
 }

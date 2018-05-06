@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags"
+    th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+
+    <div class="jumbotron text-center">
+        <div class="container">
+
+            <p>Database dumping</p>
+            <br />
+            <a type="button" class="btn btn-lg btn-primary" th:href="@{/dbdump/json}"> JSON format</a> 
+            <a type="button" class="btn btn-lg btn-primary" th:href="@{/dbdump/h2}">Raw H2 database</a>
+        </div>
+    </div>
+
+</body>
+</html>
