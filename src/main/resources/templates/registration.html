@@ -9,7 +9,18 @@
     </div>
 
     <div class="container">
+
+
+    
         <form th:action="@{/registration}" th:object="${userForm}" class="form-registration" method="post">
+
+            <div class="alert alert-info">
+                <h4 class="text-center">Instructions</h4>
+                <ul>
+                    <li>The password must have at least 8 characters.</li>
+                    <li>The password must have at least 1 digit character.</li>
+                </ul>
+            </div>
 
             <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
                 <ul>
