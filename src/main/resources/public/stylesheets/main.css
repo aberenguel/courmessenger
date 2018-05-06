@@ -16,15 +16,22 @@
 	margin: 0 auto;
 }
 
-.form-message-new
- {
+.form-message-new {
 	width: 100%;
 	max-width: 700px;
 	padding: 15px;
 	margin: 0 auto;
 }
 
-.form-message-new .message-body  {
+.form-message-new .message-body {
 	height: 350px;
 }
 
+.message-view {
+	max-width: 900px;
+}
+
+.message-view-header th {
+	width: 100px;
+	text-align: right;
+}

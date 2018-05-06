@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -35,7 +36,7 @@ public class MessageController {
 
         return "messages-inbox";
     }
-    
+
     @GetMapping("/messages/outbox")
     public String viewSendMessages(Model model) {
 
@@ -78,5 +79,19 @@ public class MessageController {
         messageService.buildAndSendMessage(messageForm);
 
         return "redirect:/messages/inbox";
+    }
+
+    @GetMapping("/messages/{id}")
+    public String viewMessage(@PathVariable("id") Long id, Model model) {
+
+        Message message = messageService.findMessage(id);
+        
+        if (message == null) {
+            return "redirect:/messages/inbox";
+        }
+
+        model.addAttribute("message", message);
+
+        return "messages-view";
     }
 }

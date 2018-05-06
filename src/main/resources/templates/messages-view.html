@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+
+    <div class="container message-view">
+
+        <div class="message-view-header" >
+            <table class="table">
+                <tr>
+                    <th>From: </th>
+                    <td><span th:text="${message.sender.name}"></span> &lt;<span th:text="${message.sender.email}">user@company.com</span>&gt;</td>
+                </tr>
+                <tr>
+                    <th>To: </th>
+                    <td><span th:text="${message.receiver.name}"></span> &lt;<span th:text="${message.receiver.email}">user@company.com</span>&gt;</td>
+                </tr>
+                <tr>
+                    <th>Date: </th>
+                    <td><span th:text="${#dates.format(message.creationDate, 'dd-MMM-yyyy -  HH:mm:ss')}"></span></td>
+                </tr>
+                <tr>
+                    <td></td><td></td>
+                </tr>
+            </table>
+
+            <h2>
+                <span th:text="${message.subject}">Subject</span>
+            </h2>
+        </div>
+
+        <div>
+            <pre th:text="${message.body}"></pre>
+        </div>
+
+        <div class="container">
+            <button onclick="window.history.back()" class="btn btn-default" role="button">Back</button>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MessageService {
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(MessageService.class);
 
     @Autowired
@@ -62,16 +62,17 @@ public class MessageService {
         return messageRepository.save(message);
     }
 
-    public void decryptMessage(Message message) throws GeneralSecurityException {
+    public void decryptMessage(Message message, boolean decryptBody) throws GeneralSecurityException {
 
         // decrypt the message
         byte[] iv = message.getIv();
-        byte[] decryptedSubject = cryptoService.decryptData(iv, cryptoService.getSubjectKey(),
-                message.getEncryptedSubject());
-        byte[] decryptedBody = cryptoService.encryptData(iv, cryptoService.getBodyKey(), message.getEncryptedBody());
-        
+        byte[] decryptedSubject = cryptoService.decryptData(iv, cryptoService.getSubjectKey(), message.getEncryptedSubject());
         message.setSubject(new String(decryptedSubject));
-        message.setBody(new String(decryptedBody));
+
+        if (decryptBody) {
+            byte[] decryptedBody = cryptoService.decryptData(iv, cryptoService.getBodyKey(), message.getEncryptedBody());
+            message.setBody(new String(decryptedBody));
+        }
 
     }
 
@@ -86,7 +87,7 @@ public class MessageService {
         // decrypt all messages
         for (Message message : messages) {
             try {
-                decryptMessage(message);
+                decryptMessage(message, false);
             } catch (GeneralSecurityException e) {
                 LOG.warn("Error decrypting message {}: {}", message.getId(), e.getMessage());
             }
@@ -94,7 +95,7 @@ public class MessageService {
 
         return messages;
     }
-    
+
     public List<Message> findSentMessages() {
 
         // sender (the logged in user)
@@ -106,13 +107,33 @@ public class MessageService {
         // decrypt all messages
         for (Message message : messages) {
             try {
-                decryptMessage(message);
+                decryptMessage(message, false);
             } catch (GeneralSecurityException e) {
                 LOG.warn("Error decrypting message {}: {}", message.getId(), e.getMessage());
             }
         }
 
         return messages;
+    }
+
+    public Message findMessage(Long id) {
+
+        // sender (the logged in user)
+        User loggedUser = userService.getUserLoggedIn();
+
+        Message message = messageRepository.findByIdAndUser(id, loggedUser);
+
+        if (message == null) {
+            return null;
+        }
+
+        try {
+            decryptMessage(message, true);
+        } catch (GeneralSecurityException e) {
+            LOG.warn("Error decrypting message {}: {}", message.getId(), e.getMessage());
+        }
+
+        return message;
     }
 
 }
