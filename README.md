@@ -71,7 +71,7 @@ heroku create
 Push the code
 
 ```
-heroku push heroku master
+git push heroku master
 ```
 
 Create a random APP_MASTER_SECRET
