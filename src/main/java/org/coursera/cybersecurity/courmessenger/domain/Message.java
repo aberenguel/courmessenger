@@ -2,20 +2,16 @@ package org.coursera.cybersecurity.courmessenger.domain;
 
 import java.util.Date;
 
-import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Type;
 
 @Entity
 public class Message {
@@ -42,10 +38,11 @@ public class Message {
     private byte[] iv;
 
     @NotNull
+    @Column(columnDefinition = "BINARY(250)")
     private byte[] encryptedSubject;
 
     @NotNull
-    @Basic(fetch = FetchType.LAZY, optional = false)
+    @Column(columnDefinition = "BINARY(5100)")
     private byte[] encryptedBody;
 
     @NotNull

@@ -2,6 +2,7 @@ package org.coursera.cybersecurity.courmessenger.view;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class MessageForm {
 
@@ -10,9 +11,11 @@ public class MessageForm {
     private String receiverEmail;
 
     @NotNull
+    @Size(max = 200)
     private String subject;
 
     @NotNull
+    @Size(max = 5000)
     private String body;
 
     public String getReceiverEmail() {
